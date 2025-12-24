@@ -27,7 +27,7 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:0.18.3"
 
     // Legacy-Fabric API
-    modImplementation net.legacyfabric.legacy-fabric-api:legacy-fabric-api:1.13.2+1.8.9
+    modImplementation "net.legacyfabric.legacy-fabric-api:legacy-fabric-api:1.13.2+1.8.9"
     
 }
 
