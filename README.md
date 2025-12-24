@@ -44,7 +44,7 @@ A high-performance PvP and HUD client mod for Minecraft 1.8.9, built with Fabric
    - Place the JAR file in your `.minecraft/mods` folder
 
 3. **Install FutureClient**
-   - Download the latest `futureclient-1.0.0.jar` from [Releases](https://github.com/yourusername/futureclient/releases)
+   - Download the latest `futureclient-1.0.0.jar` from [Releases](https://github.com/sujalofficial07/futureclient/releases)
    - Place it in your `.minecraft/mods` folder
    - Launch Minecraft 1.8.9 with the Fabric profile
 
@@ -92,7 +92,7 @@ Configuration includes:
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/futureclient.git
+git clone https://github.com/sujalofficial07/futureclient.git
 cd futureclient
 ```
 
@@ -215,8 +215,8 @@ This mod is designed for singleplayer and allowed multiplayer use only. Always c
 
 ## Support
 
-- **Issues**: [GitHub Issues](https://github.com/yourusername/futureclient/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/futureclient/discussions)
+- **Issues**: [GitHub Issues](https://github.com/sujalofficial07/futureclient/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/sujalofficial07/futureclient/discussions)
 
 ## Screenshots
 
