@@ -1,25 +1,30 @@
 {
   "schemaVersion": 1,
   "id": "futureclient",
-  "version": "1.0.0",
+  "version": "${version}",
   "name": "FutureClient",
-  "description": "High-performance PvP client for Minecraft 1.8.9 using Mixins",
+  "description": "A high-performance PvP and HUD client for Minecraft 1.8.9",
   "authors": [
-    "Sujalofficial07"
+    "FutureClient Team"
+    "sujal"
   ],
   "contact": {
-    "homepage": "https://github.com/Sujalofficial07/Future-client"
+    "homepage": "https://github.com/sujalofficial07/futureclient",
+    "sources": "https://github.com/sujalofficial07/futureclient"
   },
   "license": "MIT",
-  "environment": "*",
+  "icon": "assets/futureclient/icon.png",
+  "environment": "client",
   "entrypoints": {
-    "main": [
-      "com.futureclient.Main"
+    "client": [
+      "com.futureclient.FutureClient"
     ]
   },
   "mixins": [
-    "mixins.futureclient.json"
+    "futureclient.mixins.json"
   ],
   "depends": {
+    "fabricloader": ">=0.14.0",
+    "minecraft": "1.8.9"
   }
 }
