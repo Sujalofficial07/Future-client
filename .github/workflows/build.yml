@@ -20,6 +20,13 @@ jobs:
         with:
           distribution: temurin
           java-version: 8
+          
+      - name: Debug wrapper files
+        run: |
+          ls -l
+          ls -l gradle || true
+          ls -l gradle/wrapper || true
+          
 
       - name: Force Gradle Wrapper version (7.5.1)
         run: |
