@@ -22,13 +22,12 @@ repositories {
 }
 
 dependencies {
-    // Minecraft 1.8.9
-    minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings "net.legacyfabric:yarn:1.8.9+build.20210909"
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    minecraft "com.mojang:minecraft:1.8.9"
+    mappings "net.legacyfabric:yarn:1.8.9+build.576:v2"
+    modImplementation "net.fabricmc:fabric-loader:0.18.3"
 
-    // Fabric API for 1.8.9 (Legacy Fabric)
-    modImplementation "net.legacyfabric.legacy-fabric-api:legacy-fabric-api:${project.fabric_version}"
+    // Legacy-Fabric API
+    modImplementation net.legacyfabric.legacy-fabric-api:legacy-fabric-api:1.13.2+1.8.9
 }
 
 processResources {
