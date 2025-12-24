@@ -24,7 +24,7 @@ repositories {
 dependencies {
     // Minecraft 1.8.9
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    mappings "net.legacyfabric:yarn:1.8.9+build.456:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
     // Fabric API for 1.8.9 (Legacy Fabric)
