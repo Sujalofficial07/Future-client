@@ -50,13 +50,8 @@ dependencies {
     // Minecraft 1.8.9
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings "net.legacyfabric:yarn:${project.yarn_mappings}:v2"
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-
-    // Legacy Fabric API for 1.8.9
     modImplementation "net.legacyfabric.legacy-fabric-api:legacy-fabric-api:${project.fabric_version}"
-    
-    // Include in JAR
-    include "net.legacyfabric.legacy-fabric-api:legacy-fabric-api:${project.fabric_version}"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 }
 
 processResources {
