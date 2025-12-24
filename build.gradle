@@ -12,7 +12,7 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath 'net.fabricmc:fabric-loom:0.12-SNAPSHOT'
+        classpath 'net.legacyfabric:fabric-loom:0.10.+'
     }
 }
 
@@ -30,6 +30,11 @@ archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
+loom {
+    setIntermediaryUrl('https://repo.legacyfabric.net/repository/legacyfabric/%s')
+    setCustomMinecraftManifest("https://meta.legacyfabric.net/v2/manifest/${minecraft_version}")
+}
+
 repositories {
     mavenCentral()
     maven { 
@@ -45,9 +50,9 @@ repositories {
 dependencies {
     // Minecraft 1.8.9
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings loom.officialMojangMappings()
-    modImplementation "net.legacyfabric.legacy-fabric-api:legacy-fabric-api:${project.fabric_version}"
+    mappings "net.legacyfabric:yarn:${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.legacyfabric.legacy-fabric-api:legacy-fabric-api:${project.fabric_version}"
 }
 
 processResources {
