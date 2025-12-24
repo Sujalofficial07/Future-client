@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "futureclient",
+  "version": "1.0.0",
+  "name": "FutureClient",
+  "description": "High-performance PvP client for Minecraft 1.8.9 using Mixins",
+  "authors": [
+    "Sujalofficial07"
+  ],
+  "contact": {
+    "homepage": "https://github.com/Sujalofficial07/Future-client"
+  },
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.futureclient.Main"
+    ]
+  },
+  "mixins": [
+    "mixins.futureclient.json"
+  ],
+  "depends": {
+  }
+}

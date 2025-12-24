@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.futureclient.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "MixinMinecraft",
+    "MixinGuiIngame",
+    "MixinEntityRenderer",
+    "MixinGameSettings",
+    "MixinEffectRenderer"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "maxShiftBy": 10
+  }
+}

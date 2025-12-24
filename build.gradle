@@ -1,0 +1,71 @@
+// Gradle build script for FutureClient
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url "https://maven.fabricmc.net/" }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    }
+    dependencies {
+        // No buildscript classpath required for this structure beyond Gradle basics
+    }
+}
+
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
+
+group = 'com.futureclient'
+version = '1.0.0'
+description = 'FutureClient - Fabric Legacy 1.8.9 PvP Client (Mixin-based)'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven { url "https://repo.spongepowered.org/maven" } // mixin
+    maven { url "https://maven.fabricmc.net/" }
+}
+
+dependencies {
+    implementation 'com.google.code.gson:gson:2.8.9'
+    // Mixin runtime library (API is used only at compile-time for annotations)
+    compileOnly 'org.spongepowered:mixin:0.8.5'
+    // Provide MCP/MC 1.8.9 dependency placeholder - in real dev set this up locally or with loom/fabric-legacy tooling
+}
+
+jar {
+    manifest {
+        attributes(
+            'Implementation-Title': 'FutureClient',
+            'Implementation-Version': version,
+            'Main-Class': 'com.futureclient.Main'
+        )
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    } // produce fat-jar for convenience (not strictly recommended for mod loaders)
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+}
+
+shadowJar {
+    archiveClassifier.set('')
+    mergeServiceFiles()
+    relocate 'com.google.gson', 'com.futureclient.lib.gson'
+}
+
+task buildClient(type: Jar) {
+    dependsOn shadowJar
+    archiveFileName.set("futureclient-${version}.jar")
+    from { shadowJar.archiveFile.get().asFile.isFile() ? zipTree(shadowJar.archiveFile) : files() }
+    manifest {
+        attributes 'Main-Class': 'com.futureclient.Main'
+    }
+}
+
+build.dependsOn buildClient
