@@ -4,18 +4,13 @@ import com.futureclient.FutureClient;
 import com.futureclient.api.Module;
 import com.futureclient.util.ColorUtil;
 import com.futureclient.util.RenderUtil;
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.GuiScreen;
 
 import java.io.IOException;
 
-/**
- * HUD Editor for dragging and positioning HUD elements
- * (Placeholder implementation - can be extended for full drag-and-drop)
- */
-public class HudEditor extends Screen {
-    
+public class HudEditor extends GuiScreen {
     @Override
-    public void render(int mouseX, int mouseY, float partialTicks) {
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         drawRect(0, 0, width, height, ColorUtil.rgba(0, 0, 0, 150));
         
         String title = "HUD Editor (Coming Soon)";
@@ -33,13 +28,13 @@ public class HudEditor extends Screen {
             }
         }
         
-        super.render(mouseX, mouseY, partialTicks);
+        super.drawScreen(mouseX, mouseY, partialTicks);
     }
     
     @Override
     protected void keyTyped(char character, int keyCode) throws IOException {
         if (keyCode == 1) { // ESC
-            mc.openScreen(null);
+            mc.displayGuiScreen(null);
         }
         super.keyTyped(character, keyCode);
     }
