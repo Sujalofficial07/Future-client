@@ -4,11 +4,7 @@ import com.futureclient.api.Category;
 import com.futureclient.api.Module;
 import org.lwjgl.input.Keyboard;
 
-/**
- * Smooth zoom functionality
- */
 public class ZoomModule extends Module {
-    
     private float originalFov = 70.0f;
     private float targetFov = 30.0f;
     private float currentFov = 70.0f;
@@ -21,8 +17,8 @@ public class ZoomModule extends Module {
     
     @Override
     public void onEnable() {
-        if (mc.options != null) {
-            originalFov = mc.options.fov;
+        if (mc.gameSettings != null) {
+            originalFov = mc.gameSettings.fovSetting;
             zooming = true;
         }
     }
@@ -34,10 +30,9 @@ public class ZoomModule extends Module {
     
     @Override
     public void onTick() {
-        if (mc.options == null) return;
+        if (mc.gameSettings == null) return;
         
         if (zooming) {
-            // Smooth transition to zoom
             if (currentFov > targetFov) {
                 currentFov -= (currentFov - targetFov) * 0.5f;
                 if (Math.abs(currentFov - targetFov) < 0.5f) {
@@ -45,7 +40,6 @@ public class ZoomModule extends Module {
                 }
             }
         } else {
-            // Smooth transition back to original FOV
             if (currentFov < originalFov) {
                 currentFov += (originalFov - currentFov) * 0.5f;
                 if (Math.abs(currentFov - originalFov) < 0.5f) {
@@ -54,6 +48,6 @@ public class ZoomModule extends Module {
             }
         }
         
-        mc.options.fov = currentFov;
+        mc.gameSettings.fovSetting = currentFov;
     }
 }
