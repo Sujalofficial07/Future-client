@@ -23,8 +23,7 @@ dependencies {
     modImplementation "net.legacyfabric.legacy-fabric-api:legacy-fabric-api:${project.fabric_version}"
 }
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+    
 
 
 processResources {
@@ -36,5 +35,6 @@ processResources {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = "UTF-8"
-    options.release = 8
+    sourceCompatibility = "1.8"
+    targetCompatibility = "1.8"
 }
