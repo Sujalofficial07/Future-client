@@ -4,11 +4,7 @@ import com.futureclient.api.Module;
 import com.futureclient.util.ColorUtil;
 import com.futureclient.util.RenderUtil;
 
-/**
- * Button for toggling modules in the Click GUI
- */
 public class ModuleButton {
-    
     private final Module module;
     private int x;
     private int y;
