@@ -9,11 +9,7 @@ import com.futureclient.util.RenderUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Panel for displaying modules in a category
- */
 public class CategoryPanel {
-    
     private final Category category;
     private int x;
     private int y;
@@ -25,7 +21,7 @@ public class CategoryPanel {
     private int dragX;
     private int dragY;
     
-    private final List<ModuleButton> moduleButtons = new ArrayList<>();
+    private final List<ModuleButton> moduleButtons = new ArrayList<ModuleButton>();
     
     public CategoryPanel(Category category, int x, int y) {
         this.category = category;
