@@ -6,11 +6,7 @@ import com.futureclient.util.ColorUtil;
 import com.futureclient.util.RenderUtil;
 import org.lwjgl.input.Mouse;
 
-/**
- * Displays key presses on screen (WASD, Mouse buttons, CPS)
- */
 public class KeystrokesModule extends Module {
-    
     private int x = 100;
     private int y = 100;
     private final int keySize = 25;
@@ -30,25 +26,24 @@ public class KeystrokesModule extends Module {
         updateCPS();
         
         // W key
-        drawKey("W", x + keySize + padding, y, mc.options.keyForward.isPressed());
+        drawKey("W", x + keySize + padding, y, mc.gameSettings.keyBindForward.isKeyDown());
         
         // A key
-        drawKey("A", x, y + keySize + padding, mc.options.keyLeft.isPressed());
+        drawKey("A", x, y + keySize + padding, mc.gameSettings.keyBindLeft.isKeyDown());
         
         // S key
-        drawKey("S", x + keySize + padding, y + keySize + padding, mc.options.keyBack.isPressed());
+        drawKey("S", x + keySize + padding, y + keySize + padding, mc.gameSettings.keyBindBack.isKeyDown());
         
         // D key
-        drawKey("D", x + (keySize + padding) * 2, y + keySize + padding, mc.options.keyRight.isPressed());
+        drawKey("D", x + (keySize + padding) * 2, y + keySize + padding, mc.gameSettings.keyBindRight.isKeyDown());
         
-        // Left Mouse Button
+        // Mouse buttons
         boolean lmbPressed = Mouse.isButtonDown(0);
         if (lmbPressed && !wasPressed(0)) {
             registerClick(0);
         }
         drawMouseButton("LMB", x, y + (keySize + padding) * 2, lmbPressed, getCPS(0));
         
-        // Right Mouse Button
         boolean rmbPressed = Mouse.isButtonDown(1);
         if (rmbPressed && !wasPressed(1)) {
             registerClick(1);
@@ -102,19 +97,8 @@ public class KeystrokesModule extends Module {
         }
     }
     
-    public int getX() {
-        return x;
-    }
-    
-    public void setX(int x) {
-        this.x = x;
-    }
-    
-    public int getY() {
-        return y;
-    }
-    
-    public void setY(int y) {
-        this.y = y;
-    }
+    public int getX() { return x; }
+    public void setX(int x) { this.x = x; }
+    public int getY() { return y; }
+    public void setY(int y) { this.y = y; }
 }
