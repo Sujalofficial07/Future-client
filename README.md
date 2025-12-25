@@ -129,11 +129,9 @@ Built for **low-end systems and competitive play**.
 ### Build
 ```bash
 ./gradlew build
-
+```
 ## ⭐ Credits
 
 - Minecraft Java Edition (Mojang)
-
 - Fabric & Fabric Legacy contributors
-
 - SpongePowered Mixin
