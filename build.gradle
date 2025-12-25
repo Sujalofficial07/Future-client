@@ -15,21 +15,10 @@ repositories {
 	mavenCentral()
 }
 
-loom {
-	// Only needed for versions not available from vanilla launcher by default.
-	// customMinecraftManifest.set("https://meta.legacyfabric.net/v2/manifest/${minecraft_version}")
-}
-
-legacyLooming {
-	// Using default Legacy Fabric intermediaries (generation 1)
-}
-
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings(legacy.yarn(project.minecraft_version, project.yarn_build))
+	mappings "net.legacyfabric:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-
-	// Legacy Fabric API
 	modImplementation "net.legacyfabric.legacy-fabric-api:legacy-fabric-api:${project.fabric_version}"
 }
 
@@ -73,6 +62,5 @@ publishing {
 	}
 
 	repositories {
-		// Add repositories to publish to here.
 	}
 }
