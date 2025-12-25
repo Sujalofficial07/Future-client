@@ -1,4 +1,4 @@
-ackage com.futureclient.mixins;
+package com.futureclient.mixins;
 
 import com.futureclient.FutureClient;
 import com.futureclient.api.Module;
