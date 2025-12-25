@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.14-SNAPSHOT' // UPDATED: Supports Gradle 9+
+    id 'fabric-loom' version '1.14-SNAPSHOT'
     id 'maven-publish'
     id 'java'
 }
@@ -15,14 +15,14 @@ repositories {
 
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings "net.fabricmc:yarn:${project.yarn_mappings}"
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     
-    // Legacy Fabric API
+    // UPDATED: Changed group to 'net.legacyfabric'
+    mappings "net.legacyfabric:yarn:${project.yarn_mappings}"
+    
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.legacyfabric.legacy-fabric-api:legacy-fabric-api:${project.fabric_version}"
 }
 
-// Ensure we use Java 8 for the Minecraft code, even if Gradle runs on Java 21
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(8)
