@@ -1,6 +1,5 @@
 package com.futureclient.gui;
 
-import com.futureclient.FutureClient;
 import com.futureclient.gui.components.Frame;
 import com.futureclient.module.Category;
 import net.minecraft.client.gui.screen.Screen;
@@ -31,7 +30,7 @@ public class ClickGuiScreen extends Screen {
     }
 
     @Override
-    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+    public void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
         for (Frame frame : frames) {
             frame.mouseClicked(mouseX, mouseY, mouseButton);
         }
