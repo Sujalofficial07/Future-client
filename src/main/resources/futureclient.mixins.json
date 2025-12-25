@@ -4,10 +4,10 @@
   "package": "com.futureclient.mixins",
   "compatibilityLevel": "JAVA_8",
   "client": [
-    "MixinMinecraftClient",
-    "MixinInGameHud",
-    "MixinGameRenderer",
-    "MixinParticleManager"
+    "MixinMinecraft",
+    "MixinGuiIngame",
+    "MixinEntityRenderer",
+    "MixinEffectRenderer"
   ],
   "injectors": {
     "defaultRequire": 1
