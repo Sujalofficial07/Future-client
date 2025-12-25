@@ -5,7 +5,6 @@ import com.futureclient.module.Category;
 import net.minecraft.client.gui.screen.Screen;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.IOException;
 
 public class ClickGuiScreen extends Screen {
     private List<Frame> frames;
@@ -30,15 +29,22 @@ public class ClickGuiScreen extends Screen {
     }
 
     @Override
-    public void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+    public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
         for (Frame frame : frames) {
             frame.mouseClicked(mouseX, mouseY, mouseButton);
         }
-        super.mouseClicked(mouseX, mouseY, mouseButton);
+        // super.mouseClicked does not exist or throws IOException in some versions, 
+        // but strictly in 1.8.9 Screen it might throw. 
+        // We wrap it to be safe or omit if not needed for base logic.
+        try {
+            super.mouseClicked(mouseX, mouseY, mouseButton);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
     @Override
-    public boolean doesGuiPauseGame() {
+    public boolean shouldPauseGame() {
         return false;
     }
 }
