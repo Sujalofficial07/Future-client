@@ -1,6 +1,6 @@
 package com.futureclient.api;
 
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Keyboard;
 
 /**
@@ -8,7 +8,7 @@ import org.lwjgl.input.Keyboard;
  */
 public abstract class Module {
     
-    protected final MinecraftClient mc = MinecraftClient.getInstance();
+    protected final Minecraft mc = Minecraft.getMinecraft();
     
     private final String name;
     private final String description;
