@@ -4,7 +4,7 @@ import com.futureclient.FutureClient;
 import com.futureclient.module.Category;
 import com.futureclient.module.Module;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.DrawableHelper;
 import java.awt.Color;
 
 public class Frame {
@@ -23,14 +23,15 @@ public class Frame {
     }
 
     public void render(int mouseX, int mouseY) {
-        Gui.drawRect(x, y, x + width, y + height, new Color(40, 40, 40, 255).getRGB());
+        // In Yarn 1.8.9, Gui.drawRect is DrawableHelper.fill
+        DrawableHelper.fill(x, y, x + width, y + height, new Color(40, 40, 40, 255).getRGB());
         mc.textRenderer.drawWithShadow(category.name(), x + 2, y + 3, -1);
 
         if (open) {
             int yOffset = height;
             for (Module mod : FutureClient.INSTANCE.moduleManager.getModulesByCategory(category)) {
                 int color = mod.isEnabled() ? new Color(60, 180, 60).getRGB() : new Color(60, 60, 60).getRGB();
-                Gui.drawRect(x, y + yOffset, x + width, y + yOffset + 14, color);
+                DrawableHelper.fill(x, y + yOffset, x + width, y + yOffset + 14, color);
                 mc.textRenderer.drawWithShadow(mod.getName(), x + 2, y + yOffset + 3, -1);
                 yOffset += 14;
             }
@@ -56,7 +57,6 @@ public class Frame {
             return;
         }
         
-        // Handle module clicks
         if (open) {
             int yOffset = height;
             for (Module mod : FutureClient.INSTANCE.moduleManager.getModulesByCategory(category)) {
