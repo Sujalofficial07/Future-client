@@ -5,7 +5,7 @@ import com.futureclient.api.Module;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 
 import java.io.File;
 import java.io.FileReader;
@@ -21,7 +21,7 @@ public class ConfigManager {
     private final File configFile;
     
     public ConfigManager() {
-        File gameDir = MinecraftClient.getInstance().runDirectory;
+        File gameDir = Minecraft.getMinecraft().mcDataDir;
         File configDir = new File(gameDir, "futureclient");
         
         if (!configDir.exists()) {
