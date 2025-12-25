@@ -13,7 +13,8 @@ public class ToggleSprint extends Module {
     @Override
     public void onEvent(Event event) {
         if (event instanceof EventUpdate) {
-            if (mc.player != null && mc.player.movementInput.forwardMovement > 0 && !mc.player.isSneaking() && !mc.player.horizontalCollision) {
+            // In 1.8.9 Yarn, 'movementInput' is mapped to 'input'
+            if (mc.player != null && mc.player.input.movementForward > 0 && !mc.player.isSneaking() && !mc.player.horizontalCollision) {
                 mc.player.setSprinting(true);
             }
         }
