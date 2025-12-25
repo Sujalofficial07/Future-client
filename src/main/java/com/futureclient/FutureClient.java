@@ -6,11 +6,8 @@ import com.futureclient.core.ModuleManager;
 import com.futureclient.events.KeyInputEvent;
 import com.futureclient.gui.ClickGui;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.options.KeyBinding;
-import net.minecraft.client.util.InputUtil;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.KeyBinding;
 import org.lwjgl.input.Keyboard;
 
 /**
@@ -44,27 +41,22 @@ public class FutureClient implements ClientModInitializer {
         clickGui = new ClickGui();
         
         // Register keybindings
-        clickGuiKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-            "key.futureclient.clickgui",
-            InputUtil.Type.KEYSYM,
-            Keyboard.KEY_RSHIFT,
-            "category.futureclient"
-        ));
-        
-        // Register tick event for keybinds
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if (clickGuiKey.wasPressed()) {
-                MinecraftClient.getInstance().openScreen(clickGui);
-            }
-            
-            // Fire key input event for modules
-            eventBus.post(new KeyInputEvent());
-        });
+        clickGuiKey = new KeyBinding("key.futureclient.clickgui", Keyboard.KEY_RSHIFT, "category.futureclient");
+        net.minecraft.client.settings.KeyBinding.registerKeyBinding(clickGuiKey);
         
         // Load configuration
         configManager.load();
         
         System.out.println("[" + MOD_NAME + "] Initialization complete!");
+    }
+    
+    public void onTick() {
+        if (clickGuiKey.isPressed()) {
+            Minecraft.getMinecraft().displayGuiScreen(clickGui);
+        }
+        
+        // Fire key input event for modules
+        eventBus.post(new KeyInputEvent());
     }
     
     public static FutureClient getInstance() {
