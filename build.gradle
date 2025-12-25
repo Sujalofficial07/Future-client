@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.7-SNAPSHOT'
+    id 'fabric-loom' version '1.14-SNAPSHOT' // UPDATED: Supports Gradle 9+
     id 'maven-publish'
     id 'java'
 }
@@ -22,15 +22,12 @@ dependencies {
     modImplementation "net.legacyfabric.legacy-fabric-api:legacy-fabric-api:${project.fabric_version}"
 }
 
-// --- FIX STARTS HERE ---
+// Ensure we use Java 8 for the Minecraft code, even if Gradle runs on Java 21
 java {
-    // This tells Gradle to download and use a Java 8 compiler for the code
-    // regardless of what Java version you use to run Gradle itself.
     toolchain {
         languageVersion = JavaLanguageVersion.of(8)
     }
 }
-// --- FIX ENDS HERE ---
 
 processResources {
     inputs.property "version", project.version
@@ -41,5 +38,5 @@ processResources {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = "UTF-8"
-    options.release = 8 // Ensure strictly Java 8 bytecode
+    options.release = 8
 }
