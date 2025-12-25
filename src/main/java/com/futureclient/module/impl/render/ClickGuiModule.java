@@ -13,8 +13,8 @@ public class ClickGuiModule extends Module {
 
     @Override
     public void onEnable() {
-        // In Legacy Fabric 1.8.9 Yarn, this method is usually 'openScreen'
-        mc.openScreen(new ClickGuiScreen());
+        // Correct mapping for 1.8.9 Yarn is often setScreen
+        mc.setScreen(new ClickGuiScreen());
         this.setEnabled(false);
     }
 }
