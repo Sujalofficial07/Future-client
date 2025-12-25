@@ -5,11 +5,7 @@ import com.futureclient.api.Module;
 import com.futureclient.util.RenderUtil;
 import org.lwjgl.input.Mouse;
 
-/**
- * Displays clicks per second
- */
 public class CPSModule extends Module {
-    
     private int x = 5;
     private int y = 65;
     
@@ -27,14 +23,12 @@ public class CPSModule extends Module {
     public void onTick() {
         updateCPS();
         
-        // Track left click
         boolean lmbPressed = Mouse.isButtonDown(0);
         if (lmbPressed && !wasPressed[0]) {
             registerClick(0);
         }
         wasPressed[0] = lmbPressed;
         
-        // Track right click
         boolean rmbPressed = Mouse.isButtonDown(1);
         if (rmbPressed && !wasPressed[1]) {
             registerClick(1);
@@ -65,19 +59,8 @@ public class CPSModule extends Module {
         }
     }
     
-    public int getX() {
-        return x;
-    }
-    
-    public void setX(int x) {
-        this.x = x;
-    }
-    
-    public int getY() {
-        return y;
-    }
-    
-    public void setY(int y) {
-        this.y = y;
-    }
+    public int getX() { return x; }
+    public void setX(int x) { this.x = x; }
+    public int getY() { return y; }
+    public void setY(int y) { this.y = y; }
 }
