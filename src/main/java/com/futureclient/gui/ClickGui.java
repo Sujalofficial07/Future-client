@@ -2,23 +2,18 @@ package com.futureclient.gui;
 
 import com.futureclient.FutureClient;
 import com.futureclient.api.Category;
-import com.futureclient.api.Module;
 import com.futureclient.gui.components.CategoryPanel;
 import com.futureclient.util.ColorUtil;
 import com.futureclient.util.RenderUtil;
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.GuiScreen;
 import org.lwjgl.input.Mouse;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Modern Click GUI inspired by Lunar Client
- */
-public class ClickGui extends Screen {
-    
-    private final List<CategoryPanel> panels = new ArrayList<>();
+public class ClickGui extends GuiScreen {
+    private final List<CategoryPanel> panels = new ArrayList<CategoryPanel>();
     private int startX = 50;
     private int startY = 50;
     private final int panelSpacing = 10;
@@ -34,7 +29,7 @@ public class ClickGui extends Screen {
     }
     
     @Override
-    public void render(int mouseX, int mouseY, float partialTicks) {
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         // Draw semi-transparent background
         drawRect(0, 0, width, height, ColorUtil.rgba(0, 0, 0, 100));
         
@@ -48,7 +43,7 @@ public class ClickGui extends Screen {
             panel.render(mouseX, mouseY);
         }
         
-        super.render(mouseX, mouseY, partialTicks);
+        super.drawScreen(mouseX, mouseY, partialTicks);
     }
     
     @Override
@@ -70,7 +65,7 @@ public class ClickGui extends Screen {
     @Override
     protected void keyTyped(char character, int keyCode) throws IOException {
         if (keyCode == 1) { // ESC key
-            mc.openScreen(null);
+            mc.displayGuiScreen(null);
             FutureClient.getInstance().getConfigManager().save();
         }
         
