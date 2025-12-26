@@ -9,24 +9,34 @@
   Fabric Legacy (Mixin-based) • Minecraft 1.8.9
 </p>
 
-<p align="center">
-  <!-- Build Status -->
-  <img src="https://img.shields.io/github/actions/workflow/status/Sujalofficial07/FutureClient/build.yml?branch=main&style=for-the-badge" />
-
   <!-- Latest Release -->
-  <img src="https://img.shields.io/github/v/release/Sujalofficial07/FutureClient?style=for-the-badge" />
+<p align="center">
+  <!-- Build -->
+  <a href="https://github.com/Sujalofficial07/FutureClient/actions">
+    <img src="https://img.shields.io/github/actions/workflow/status/Sujalofficial07/FutureClient/build.yml?branch=main&style=flat-square&logo=github&logoColor=white">
+  </a>
+
+  <!-- Release -->
+  <a href="https://github.com/Sujalofficial07/FutureClient/releases">
+    <img src="https://img.shields.io/github/v/release/Sujalofficial07/FutureClient?style=flat-square&logo=github">
+  </a>
 
   <!-- Java -->
-  <img src="https://img.shields.io/badge/Language-Java%208-orange?style=for-the-badge&logo=java" />
+  <img src="https://img.shields.io/badge/Java-8-red?style=flat-square&logo=java&logoColor=white">
 
   <!-- Minecraft -->
-  <img src="https://img.shields.io/badge/Minecraft-1.8.9-brightgreen?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Minecraft-1.8.9-62B47A?style=flat-square&logo=minecraft&logoColor=white">
 
   <!-- Fabric -->
-  <img src="https://img.shields.io/badge/Fabric-Legacy-blue?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Fabric-Legacy-1E90FF?style=flat-square">
+
+  <!-- Platform -->
+  <img src="https://img.shields.io/badge/Platform-Windows%20|%20Linux%20|%20macOS-lightgrey?style=flat-square">
 
   <!-- License -->
-  <img src="https://img.shields.io/github/license/Sujalofficial07/FutureClient?style=for-the-badge" />
+  <a href="https://github.com/Sujalofficial07/FutureClient/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/Sujalofficial07/FutureClient?style=flat-square">
+  </a>
 </p>
 
 ---
