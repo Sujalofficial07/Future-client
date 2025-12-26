@@ -1,6 +1,6 @@
 package com.futureclient.module.impl.render;
 
-import com.futureclient.gui.ClickGuiScreen;
+import com.futureclient.gui.LunarGuiScreen;
 import com.futureclient.module.Category;
 import com.futureclient.module.Module;
 import org.lwjgl.input.Keyboard;
@@ -13,8 +13,7 @@ public class ClickGuiModule extends Module {
 
     @Override
     public void onEnable() {
-        // Correct mapping for 1.8.9 Yarn is often setScreen
-        mc.setScreen(new ClickGuiScreen());
+        mc.setScreen(new LunarGuiScreen());
         this.setEnabled(false);
     }
 }
