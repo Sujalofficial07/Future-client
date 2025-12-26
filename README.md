@@ -12,13 +12,13 @@
   <!-- Latest Release -->
 <p align="center">
   <!-- Build -->
-  <a href="https://github.com/Sujalofficial07/FutureClient/actions">
-    <img src="https://img.shields.io/github/actions/workflow/status/Sujalofficial07/FutureClient/build.yml?branch=main&style=flat-square&logo=github&logoColor=white">
+  <a href="https://github.com/Sujalofficial07/Future-Client/actions">
+    <img src="https://img.shields.io/github/actions/workflow/status/Sujalofficial07/Future-Client/build.yml?branch=main&style=flat-square&logo=github&logoColor=white">
   </a>
 
   <!-- Release -->
-  <a href="https://github.com/Sujalofficial07/FutureClient/releases">
-    <img src="https://img.shields.io/github/v/release/Sujalofficial07/FutureClient?style=flat-square&logo=github">
+  <a href="https://github.com/Sujalofficial07/Future-Client/releases">
+    <img src="https://img.shields.io/github/v/release/Sujalofficial07/Future-Client?style=flat-square&logo=github">
   </a>
 
   <!-- Java -->
