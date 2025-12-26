@@ -35,7 +35,7 @@
 
   <!-- License -->
   <a href="https://github.com/Sujalofficial07/FutureClient/blob/main/LICENSE">
-    <img src="https://img.shields.io/github/license/Sujalofficial07/FutureClient?style=flat-square">
+    <img src="https://img.shields.io/github/license/Sujalofficial07/Future-Client?style=flat-square">
   </a>
 </p>
 
