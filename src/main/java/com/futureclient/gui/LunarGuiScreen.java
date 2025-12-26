@@ -4,16 +4,18 @@ import com.futureclient.FutureClient;
 import com.futureclient.module.Category;
 import com.futureclient.module.Module;
 import com.futureclient.util.RenderUtil;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import org.lwjgl.input.Mouse;
 
 import java.awt.Color;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class LunarGuiScreen extends Screen {
     
+    // FIX: Define the 'mc' variable explicitly
+    private final MinecraftClient mc = MinecraftClient.getInstance();
+
     // Layout Constants
     private final int WINDOW_WIDTH = 600;
     private final int WINDOW_HEIGHT = 350;
@@ -72,18 +74,14 @@ public class LunarGuiScreen extends Screen {
         int moduleHeight = 40;
         int gap = 10;
         
-        // Scissor Test could be added here to clip scrolling, but we'll keep it simple for now.
-        
         int currentX = moduleAreaX;
         int currentY = moduleAreaY + (int)scrollY;
         
         List<Module> modules = FutureClient.INSTANCE.moduleManager.getModulesByCategory(selectedCategory);
         
         for (Module mod : modules) {
-            // Check if visible inside window
-            if (currentY < centerY - 50 || currentY > centerY + WINDOW_HEIGHT) {
-                // simple culling
-            } else {
+            // Simple culling to avoid drawing outside the window
+            if (currentY > centerY - 50 && currentY < centerY + WINDOW_HEIGHT) {
                 drawModuleCard(mod, currentX, currentY, moduleWidth, moduleHeight, mouseX, mouseY);
             }
 
@@ -122,8 +120,6 @@ public class LunarGuiScreen extends Screen {
         mc.textRenderer.drawWithShadow(mod.getName(), x + 5, y + 5, -1);
         
         // Description (Smaller / Grey)
-        // Scaling down text in 1.8.9 usually requires GL scaling
-        // We'll just draw it normally but grey
         String desc = mod.getName().equals("ToggleSprint") ? "Sprint toggle" : "Settings..."; 
         mc.textRenderer.drawWithShadow(desc, x + 5, y + 20, new Color(150, 150, 150).getRGB());
         
