@@ -1,30 +1,26 @@
 plugins {
-    id 'fabric-loom' version '1.14-SNAPSHOT'
+    id 'fabric-loom' version '1.2-SNAPSHOT'
     id 'maven-publish'
-    id 'java'
 }
 
-archivesBaseName = project.rootProject.name
-version = "1.0.0"
-group = "com.futureclient"
+version = project.mod_version
+group = project.maven_group
+
+base {
+    archivesName = project.archives_base_name
+}
 
 repositories {
-    maven { url 'https://maven.fabricmc.net/' }
-    maven { url 'https://repo.legacyfabric.net/repository/legacyfabric/' }
+    maven { url "https://maven.terraformersmc.com/releases/" }
 }
 
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    
-    // UPDATED: Changed group to 'net.legacyfabric'
-    mappings "net.legacyfabric:yarn:${project.yarn_mappings}"
-    
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-    modImplementation "net.legacyfabric.legacy-fabric-api:legacy-fabric-api:${project.fabric_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    implementation 'com.google.code.gson:gson:2.10.1'
 }
-
-    
-
 
 processResources {
     inputs.property "version", project.version
@@ -34,7 +30,9 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-    options.encoding = "UTF-8"
-    sourceCompatibility = "1.8"
-    targetCompatibility = "1.8"
+    it.options.release = 17
+}
+
+java {
+    withSourcesJar()
 }
