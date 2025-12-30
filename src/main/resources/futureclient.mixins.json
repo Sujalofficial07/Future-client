@@ -5,7 +5,8 @@
   "mixins": [
     "GameRendererMixin",
     "InGameHudMixin",
-    "HeldItemRendererMixin"
+    "HeldItemRendererMixin",
+    "TitleScreenMixin"
   ],
   "injectors": { "defaultRequire": 1 }
 }
