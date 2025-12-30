@@ -1,6 +1,7 @@
 package com.futureclient.gui.screen;
 
 import com.futureclient.FutureClient;
+import com.futureclient.gui.RenderUtils;
 import com.futureclient.module.Category;
 import com.futureclient.module.Module;
 import net.minecraft.client.gui.DrawContext;
@@ -10,58 +11,112 @@ import net.minecraft.text.Text;
 import java.util.List;
 
 public class ClickGUIScreen extends Screen {
-    public ClickGUIScreen() { super(Text.of("ClickGUI")); }
+    
+    private Category selectedCategory = Category.COMBAT; // Default category
+    private final int GUI_WIDTH = 350;
+    private final int GUI_HEIGHT = 250;
+
+    public ClickGUIScreen() { super(Text.of("Lunar ClickGUI")); }
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        this.renderBackground(context); // Dark overlay
-        
-        int startX = 50;
-        int startY = 30;
-        int width = 110;
-        
-        // Render Columns for each Category
-        for (Category category : Category.values()) {
-            // Header
-            context.fill(startX, startY, startX + width, startY + 20, 0xFF111111);
-            context.drawCenteredTextWithShadow(textRenderer, category.name(), startX + width / 2, startY + 6, 0xFF55FFFF);
+        // 1. Dark Overlay Background
+        this.renderBackground(context);
 
-            int modY = startY + 22;
-            List<Module> modules = FutureClient.moduleManager.getModulesByCategory(category);
+        // Center Calculations
+        int startX = (width - GUI_WIDTH) / 2;
+        int startY = (height - GUI_HEIGHT) / 2;
+
+        // 2. Main GUI Background (Dark Grey)
+        RenderUtils.drawRect(context, startX, startY, GUI_WIDTH, GUI_HEIGHT, RenderUtils.COLOR_BACKGROUND);
+        
+        // 3. Left Sidebar (Lighter Grey)
+        int sidebarWidth = 80;
+        RenderUtils.drawRect(context, startX, startY, sidebarWidth, GUI_HEIGHT, RenderUtils.COLOR_SECONDARY);
+
+        // 4. Render Categories (Sidebar)
+        int catY = startY + 20;
+        for (Category cat : Category.values()) {
+            boolean isSelected = (cat == selectedCategory);
+            int textColor = isSelected ? RenderUtils.COLOR_ACCENT : 0xFFAAAAAA;
             
-            for (Module m : modules) {
-                // Hover effect
-                boolean hovered = mouseX >= startX && mouseX <= startX + width && mouseY >= modY && mouseY <= modY + 18;
-                int color = m.isEnabled() ? 0xFF00AA00 : (hovered ? 0xFF444444 : 0xFF222222);
-
-                context.fill(startX, modY, startX + width, modY + 18, color);
-                context.drawText(textRenderer, m.getName(), startX + 5, modY + 5, -1, false);
-                modY += 19;
+            // Indicator Bar for selected
+            if (isSelected) {
+                RenderUtils.drawRect(context, startX, catY - 4, 3, 16, RenderUtils.COLOR_ACCENT);
             }
-            startX += width + 20;
+
+            context.drawText(textRenderer, cat.name(), startX + 10, catY, textColor, false);
+            catY += 30; // Spacing
         }
+
+        // 5. Render Modules (Grid Layout in Right Panel)
+        int modX = startX + sidebarWidth + 10;
+        int modY = startY + 10;
+        List<Module> modules = FutureClient.moduleManager.getModulesByCategory(selectedCategory);
+        
+        for (Module m : modules) {
+            // Module Box Dimensions
+            int boxW = 120;
+            int boxH = 25;
+
+            // Hover Check
+            boolean hovered = mouseX >= modX && mouseX <= modX + boxW && mouseY >= modY && mouseY <= modY + boxH;
+            
+            // Logic for Color
+            int boxColor = m.isEnabled() ? 0xFF28A5F5 : (hovered ? 0xFF353535 : 0xFF2A2A2A); // Blue if On, Grey if Off
+            int borderColor = 0xFF444444;
+
+            // Draw Module Box
+            RenderUtils.drawBorderedRect(context, modX, modY, boxW, boxH, boxColor, borderColor);
+            
+            // Draw Module Name
+            context.drawText(textRenderer, m.getName(), modX + 5, modY + 8, -1, true);
+
+            // Toggle State Circle (Visual only)
+            int circleColor = m.isEnabled() ? 0xFFFFFFFF : 0xFF888888;
+            context.fill(modX + boxW - 15, modY + 8, modX + boxW - 7, modY + 16, circleColor);
+
+            modY += 30; // Next row (Simple vertical list for now, can be grid)
+        }
+
         super.render(context, mouseX, mouseY, delta);
     }
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        if (button == 0) { // Left Click Toggle
-            int startX = 50;
-            int startY = 30;
-            int width = 110;
-            
-            for (Category category : Category.values()) {
-                int modY = startY + 22;
-                for (Module m : FutureClient.moduleManager.getModulesByCategory(category)) {
-                    if (mouseX >= startX && mouseX <= startX + width && mouseY >= modY && mouseY <= modY + 18) {
-                        m.toggle();
-                        return true;
-                    }
-                    modY += 19;
-                }
-                startX += width + 20;
-            }
+        int startX = (width - GUI_WIDTH) / 2;
+        int startY = (height - GUI_HEIGHT) / 2;
+        
+        // Handle Category Clicks
+        int sidebarWidth = 80;
+        if (mouseX >= startX && mouseX <= startX + sidebarWidth) {
+             int catY = startY + 20;
+             for (Category cat : Category.values()) {
+                 if (mouseY >= catY - 5 && mouseY <= catY + 15) {
+                     selectedCategory = cat;
+                     return true;
+                 }
+                 catY += 30;
+             }
         }
+
+        // Handle Module Clicks
+        int modX = startX + sidebarWidth + 10;
+        int modY = startY + 10;
+        List<Module> modules = FutureClient.moduleManager.getModulesByCategory(selectedCategory);
+        
+        for (Module m : modules) {
+            int boxW = 120;
+            int boxH = 25;
+            if (mouseX >= modX && mouseX <= modX + boxW && mouseY >= modY && mouseY <= modY + boxH) {
+                m.toggle();
+                // Play sound
+                client.getSoundManager().play(net.minecraft.client.sound.PositionedSoundInstance.master(net.minecraft.sound.SoundEvents.UI_BUTTON_CLICK, 1.0F));
+                return true;
+            }
+            modY += 30;
+        }
+
         return super.mouseClicked(mouseX, mouseY, button);
     }
     
