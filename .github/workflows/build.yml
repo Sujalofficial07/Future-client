@@ -1,0 +1,51 @@
+name: Build FutureClient
+
+on:
+  push:
+    branches: [ "master", "main" ]
+  pull_request:
+    branches: [ "master", "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Repository ka code checkout karein
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # 2. Java 17 setup karein (Minecraft 1.20.1 ke liye required)
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      # 3. Gradle wrapper ko execute permission dein
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      # 4. Cache Gradle packages (Build speed badhane ke liye)
+      - name: Cache Gradle packages
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      # 5. Mod Build karein
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      # 6. Built JAR file ko artifact ki tarah upload karein
+      - name: Upload Mod Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: FutureClient-Build
+          path: build/libs/*.jar
+          retention-days: 7
+          
