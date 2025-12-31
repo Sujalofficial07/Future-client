@@ -6,7 +6,9 @@
     "GameRendererMixin",
     "InGameHudMixin",
     "HeldItemRendererMixin",
-    "TitleScreenMixin"
+    "TitleScreenMixin",
+    "SplashOverlayMixin",
+    "HandledScreenMixin"
   ],
   "injectors": { "defaultRequire": 1 }
 }
