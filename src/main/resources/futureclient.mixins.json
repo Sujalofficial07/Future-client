@@ -8,8 +8,8 @@
     "HeldItemRendererMixin",
     "TitleScreenMixin",
     "SplashOverlayMixin",
-    "HandledScreenMixin",
-    "EntityRendererMixin"
+    "EntityRendererMixin",
+    "ContainerScreenMixin" 
   ],
   "injectors": { "defaultRequire": 1 }
 }
