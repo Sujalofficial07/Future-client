@@ -19,6 +19,11 @@ public abstract class HandledScreenMixin extends Screen {
     @Shadow protected int y;
     @Shadow protected int backgroundWidth;
     @Shadow protected int backgroundHeight;
+    @Shadow protected java.util.List<net.minecraft.screen.slot.Slot> handler_slots; // Pseudo-code accessor
+
+    // Asli implementation mein "handler" access karna padta hai
+    // Par simplcity ke liye, hum bas main background draw kar rahe hain upar wale code mein.
+    
 
     protected HandledScreenMixin(Text title) {
         super(title);
