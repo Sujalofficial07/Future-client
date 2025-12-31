@@ -7,76 +7,96 @@ import com.futureclient.module.Module;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.List;
 
 public class ClickGUIScreen extends Screen {
-    
-    private Category selectedCategory = Category.COMBAT; // Default category
-    private final int GUI_WIDTH = 350;
-    private final int GUI_HEIGHT = 250;
 
-    public ClickGUIScreen() { super(Text.of("Lunar ClickGUI")); }
+    private Category selectedCategory = Category.COMBAT;
+    
+    // GUI Dimensions
+    private final int GUI_WIDTH = 500;
+    private final int GUI_HEIGHT = 350;
+    private int startX, startY;
+
+    public ClickGUIScreen() { super(Text.of("Mod Menu")); }
+
+    @Override
+    protected void init() {
+        // Calculate center position
+        this.startX = (width - GUI_WIDTH) / 2;
+        this.startY = (height - GUI_HEIGHT) / 2;
+    }
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        // 1. Dark Overlay Background
+        // 1. Dark Background Overlay (Blur effect)
         this.renderBackground(context);
 
-        // Center Calculations
-        int startX = (width - GUI_WIDTH) / 2;
-        int startY = (height - GUI_HEIGHT) / 2;
+        // 2. Main Container (Rounded Box look)
+        RenderUtils.drawRect(context, startX, startY, GUI_WIDTH, GUI_HEIGHT, RenderUtils.BG_DARK);
 
-        // 2. Main GUI Background (Dark Grey)
-        RenderUtils.drawRect(context, startX, startY, GUI_WIDTH, GUI_HEIGHT, RenderUtils.COLOR_BACKGROUND);
+        // 3. Sidebar (Left Side)
+        int sidebarWidth = 120;
+        RenderUtils.drawRect(context, startX, startY, sidebarWidth, GUI_HEIGHT, RenderUtils.BG_SIDEBAR);
+
+        // 4. Logo / Title
+        context.drawCenteredTextWithShadow(textRenderer, "FUTURE", startX + sidebarWidth / 2, startY + 20, RenderUtils.ACCENT);
         
-        // 3. Left Sidebar (Lighter Grey)
-        int sidebarWidth = 80;
-        RenderUtils.drawRect(context, startX, startY, sidebarWidth, GUI_HEIGHT, RenderUtils.COLOR_SECONDARY);
-
-        // 4. Render Categories (Sidebar)
-        int catY = startY + 20;
+        // 5. Render Categories (Sidebar)
+        int catY = startY + 60;
         for (Category cat : Category.values()) {
             boolean isSelected = (cat == selectedCategory);
-            int textColor = isSelected ? RenderUtils.COLOR_ACCENT : 0xFFAAAAAA;
+            int textColor = isSelected ? 0xFFFFFFFF : 0xFF888888;
             
-            // Indicator Bar for selected
+            // Selection Indicator (Blue line on left)
             if (isSelected) {
-                RenderUtils.drawRect(context, startX, catY - 4, 3, 16, RenderUtils.COLOR_ACCENT);
+                RenderUtils.drawRect(context, startX, catY - 5, 2, 20, RenderUtils.ACCENT);
             }
 
-            context.drawText(textRenderer, cat.name(), startX + 10, catY, textColor, false);
-            catY += 30; // Spacing
+            context.drawText(textRenderer, cat.name(), startX + 20, catY, textColor, false);
+            catY += 40; // Spacing
         }
 
-        // 5. Render Modules (Grid Layout in Right Panel)
-        int modX = startX + sidebarWidth + 10;
-        int modY = startY + 10;
+        // 6. Top Bar (Search & Info)
+        int mainContentX = startX + sidebarWidth;
+        RenderUtils.drawRect(context, mainContentX, startY, GUI_WIDTH - sidebarWidth, 50, 0xFF222222); // Header bar
+        context.drawText(textRenderer, "Mods (" + selectedCategory.name() + ")", mainContentX + 20, startY + 20, -1, true);
+
+        // 7. Render Modules (Grid Layout)
+        int modX = mainContentX + 20;
+        int modY = startY + 70;
+        int gap = 15;
+        int cardWidth = 160;
+        int cardHeight = 40;
+        
         List<Module> modules = FutureClient.moduleManager.getModulesByCategory(selectedCategory);
         
-        for (Module m : modules) {
-            // Module Box Dimensions
-            int boxW = 120;
-            int boxH = 25;
+        for (int i = 0; i < modules.size(); i++) {
+            Module m = modules.get(i);
+            
+            // Grid Logic (2 Columns)
+            int col = i % 2; 
+            int row = i / 2;
+            int currentX = modX + (col * (cardWidth + gap));
+            int currentY = modY + (row * (cardHeight + gap));
 
             // Hover Check
-            boolean hovered = mouseX >= modX && mouseX <= modX + boxW && mouseY >= modY && mouseY <= modY + boxH;
+            boolean hovered = mouseX >= currentX && mouseX <= currentX + cardWidth && mouseY >= currentY && mouseY <= currentY + cardHeight;
+
+            // Card Background
+            int cardColor = hovered ? 0xFF353535 : RenderUtils.MOD_OFF;
+            RenderUtils.drawRect(context, currentX, currentY, cardWidth, cardHeight, cardColor);
+
+            // Module Name
+            context.drawText(textRenderer, m.getName(), currentX + 10, currentY + 10, -1, true);
             
-            // Logic for Color
-            int boxColor = m.isEnabled() ? 0xFF28A5F5 : (hovered ? 0xFF353535 : 0xFF2A2A2A); // Blue if On, Grey if Off
-            int borderColor = 0xFF444444;
+            // Module Description (Small grey text)
+            // context.drawText(textRenderer, "Settings >", currentX + 10, currentY + 25, 0xFF888888, false);
 
-            // Draw Module Box
-            RenderUtils.drawBorderedRect(context, modX, modY, boxW, boxH, boxColor, borderColor);
-            
-            // Draw Module Name
-            context.drawText(textRenderer, m.getName(), modX + 5, modY + 8, -1, true);
-
-            // Toggle State Circle (Visual only)
-            int circleColor = m.isEnabled() ? 0xFFFFFFFF : 0xFF888888;
-            context.fill(modX + boxW - 15, modY + 8, modX + boxW - 7, modY + 16, circleColor);
-
-            modY += 30; // Next row (Simple vertical list for now, can be grid)
+            // Toggle Switch
+            RenderUtils.drawToggle(context, currentX + cardWidth - 30, currentY + 14, m.isEnabled());
         }
 
         super.render(context, mouseX, mouseY, delta);
@@ -84,37 +104,42 @@ public class ClickGUIScreen extends Screen {
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        int startX = (width - GUI_WIDTH) / 2;
-        int startY = (height - GUI_HEIGHT) / 2;
-        
-        // Handle Category Clicks
-        int sidebarWidth = 80;
+        // Handle Sidebar Clicks
+        int sidebarWidth = 120;
         if (mouseX >= startX && mouseX <= startX + sidebarWidth) {
-             int catY = startY + 20;
+             int catY = startY + 60;
              for (Category cat : Category.values()) {
-                 if (mouseY >= catY - 5 && mouseY <= catY + 15) {
+                 if (mouseY >= catY - 10 && mouseY <= catY + 25) {
                      selectedCategory = cat;
+                     // Sound
+                     client.getSoundManager().play(net.minecraft.client.sound.PositionedSoundInstance.master(net.minecraft.sound.SoundEvents.UI_BUTTON_CLICK, 1.0F));
                      return true;
                  }
-                 catY += 30;
+                 catY += 40;
              }
         }
 
         // Handle Module Clicks
-        int modX = startX + sidebarWidth + 10;
-        int modY = startY + 10;
+        int mainContentX = startX + sidebarWidth;
+        int modX = mainContentX + 20;
+        int modY = startY + 70;
+        int gap = 15;
+        int cardWidth = 160;
+        int cardHeight = 40;
+        
         List<Module> modules = FutureClient.moduleManager.getModulesByCategory(selectedCategory);
         
-        for (Module m : modules) {
-            int boxW = 120;
-            int boxH = 25;
-            if (mouseX >= modX && mouseX <= modX + boxW && mouseY >= modY && mouseY <= modY + boxH) {
-                m.toggle();
-                // Play sound
+        for (int i = 0; i < modules.size(); i++) {
+            int col = i % 2; 
+            int row = i / 2;
+            int currentX = modX + (col * (cardWidth + gap));
+            int currentY = modY + (row * (cardHeight + gap));
+
+            if (mouseX >= currentX && mouseX <= currentX + cardWidth && mouseY >= currentY && mouseY <= currentY + cardHeight) {
+                modules.get(i).toggle();
                 client.getSoundManager().play(net.minecraft.client.sound.PositionedSoundInstance.master(net.minecraft.sound.SoundEvents.UI_BUTTON_CLICK, 1.0F));
                 return true;
             }
-            modY += 30;
         }
 
         return super.mouseClicked(mouseX, mouseY, button);
